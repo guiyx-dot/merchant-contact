@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>商户负责人信息 · 需求说明</title>
+  <style>
+    :root {
+      --bg: #f3f5f7; --card: #fff; --ink: #1f1f1f; --sub: #595959; --line: #e6e8eb;
+      --new: #cf1322;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; font-size: 14px; line-height: 1.6; }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 28px 20px 64px; }
+    h1 { margin: 0; font-size: 26px; }
+    h2 { margin: 0 0 12px; font-size: 16px; }
+    .lead { margin: 8px 0 0; color: var(--sub); }
+    .card { background: var(--card); border-radius: 12px; padding: 18px; margin-top: 16px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { background: #fafafa; color: var(--sub); font-weight: 550; }
+    .mark { display: inline-block; min-width: 36px; text-align: center; border-radius: 4px; font-size: 12px; padding: 0 6px; line-height: 20px; }
+    .mark.add { background: #fff1f0; color: var(--new); }
+    .mark.keep { background: #f5f5f5; color: #595959; }
+    .foot { margin: 8px 0 0; color: var(--sub); font-size: 12px; }
+    figure { margin: 14px 0 0; }
+    figure img { width: 100%; height: auto; display: block; border: 1px solid var(--line); border-radius: 8px; }
+    figure.menu { max-width: 360px; }
+    figcaption { margin-top: 6px; color: var(--sub); font-size: 12px; }
+    ul { margin: 8px 0 0; padding-left: 18px; }
+    li { margin: 4px 0; }
+    .stage { margin-top: 16px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #f7f8fa; font-size: 13px; }
+    .topbar { height: 48px; background: #2b3046; color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; }
+    .brand { font-size: 14px; letter-spacing: 0.2px; }
+    .brand span { opacity: 0.55; margin: 0 6px; }
+    .who { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+    .avatar { width: 26px; height: 26px; border-radius: 50%; background: #d9dde8; }
+    .shell { display: flex; min-height: 420px; }
+    .side { width: 168px; background: #e7f1fd; color: #3c4a62; padding: 10px 0; flex: none; }
+    .side div { padding: 8px 16px; }
+    .side .on { background: #d3e6fb; color: #1f6feb; }
+    .main { flex: 1; position: relative; display: flex; align-items: center; justify-content: center; background: #f5f6f8; }
+    .hello { text-align: center; color: #3ec8c8; font-size: 18px; }
+    .hello i { display: block; width: 72px; height: 72px; margin: 0 auto 10px; border-radius: 50%; background: #e7eef5; }
+    .mask { position: absolute; inset: 0; background: rgba(20, 24, 36, 0.45); display: flex; align-items: center; justify-content: center; }
+    .dialog { width: 420px; background: #fff; border-radius: 8px; padding: 22px 22px 18px; box-shadow: 0 8px 28px rgba(20, 24, 36, 0.18); }
+    .dialog h3 { margin: 0; font-size: 16px; font-weight: 600; }
+    .dialog .hint { margin: 6px 0 14px; color: #8c8c8c; font-size: 12px; }
+    .field { margin-bottom: 12px; }
+    .field label { display: block; margin-bottom: 6px; color: #262626; }
+    .field label em { color: #ff4d4f; font-style: normal; margin-right: 2px; }
+    .field .box { height: 34px; border: 1px solid #e5e6eb; border-radius: 4px; background: #fafafa; color: #bfbfbf; padding: 0 10px; line-height: 34px; }
+    .field .box.filled { color: #262626; background: #fff; }
+    .actions { display: flex; justify-content: flex-end; margin-top: 6px; }
+    .btn { height: 32px; padding: 0 18px; border: 0; border-radius: 4px; background: #3ec8c8; color: #fff; font-size: 13px; }
+    .page { flex: 1; padding: 18px 22px 24px; background: #f5f6f8; }
+    .page h3 { margin: 0 0 4px; font-size: 16px; }
+    .page .hint { margin: 0 0 14px; color: #8c8c8c; font-size: 12px; }
+    .form { background: #fff; border-radius: 8px; padding: 18px 18px 8px; max-width: 560px; }
+    .drop { width: 220px; background: #fff; border-radius: 8px; box-shadow: 0 6px 20px rgba(20, 24, 36, 0.12); overflow: hidden; margin-top: 16px; }
+    .drop div { padding: 12px 16px; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; }
+    .drop .new { color: #262626; }
+    .drop .out { color: #ff4d4f; border-bottom: 0; }
+    .tag { background: #fff1f0; color: #cf1322; border-radius: 4px; font-size: 12px; padding: 0 6px; line-height: 20px; }
+    .switch { width: 32px; height: 18px; border-radius: 9px; background: #3ec8c8; position: relative; }
+    .switch i { position: absolute; right: 2px; top: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; }
+    .detail { margin-top: 16px; background: #fff; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+    .dhead { height: 44px; display: flex; align-items: center; gap: 8px; padding: 0 16px; background: linear-gradient(#f7fbff, #fff); border-bottom: 1px solid #f0f0f0; font-weight: 600; }
+    .dhead i { color: #8c8c8c; font-style: normal; }
+    .dbody { padding: 8px 18px 16px; }
+    .drow { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
+    .drow > span:first-child { width: 132px; flex: none; color: #595959; }
+    .drow .req { color: #ff4d4f; margin-right: 2px; }
+    .din { flex: 1; height: 34px; line-height: 34px; padding: 0 12px; background: #f5f6f8; border-radius: 4px; color: #262626; }
+    .din.ph { color: #c0c4cc; }
+    .markbox { margin-top: 10px; border: 2px solid #ff4d4f; border-radius: 6px; padding: 4px 10px 12px; }
+    .markbox .drow { margin-top: 8px; }
+    .pill { flex: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>商户负责人信息</h1>
+    <p class="lead">商户平台收集负责人、负责人电话、负责人邮箱。没填过的，登录时强制填写。填完写回数字中台的商户管理，并可以导出。</p>
+
+    <section class="card">
+      <h2>1. 商户平台：登录时填写</h2>
+      <p>蜂巢云平台（商户管理平台）登录后进入首页。还没填过这三项的商户，在这个页面上弹出填写窗。</p>
+      <ul>
+        <li>新商户：第一次登录就弹。</li>
+        <li>历史商户：下一次登录时弹。</li>
+        <li>三项都必填。没填完不能关掉，也不能继续用平台。</li>
+        <li>已经填过的，之后登录不再弹。</li>
+      </ul>
+      <p>弹窗没有关闭，没有取消。点外面的遮罩也关不掉。三项都填完，点确认，才进入平台。</p>
+      <div class="stage" aria-label="登录填写弹窗设计">
+        <div class="topbar">
+          <div class="brand">蜂巢云平台<span>|</span>商户管理平台</div>
+          <div class="who"><span class="avatar"></span>常念</div>
+        </div>
+        <div class="shell">
+          <div class="side">
+            <div class="on">首页</div>
+            <div>商品管理</div>
+            <div>活动管理</div>
+            <div>额度管理</div>
+            <div>订单管理</div>
+          </div>
+          <div class="main">
+            <div class="hello"><i></i>欢迎光临</div>
+            <div class="mask">
+              <div class="dialog">
+                <h3>完善负责人信息</h3>
+                <p class="hint">请填写商户负责人、电话和邮箱。填写后才能继续使用。</p>
+                <div class="field"><label><em>*</em>负责人</label><div class="box">请输入负责人姓名</div></div>
+                <div class="field"><label><em>*</em>负责人电话</label><div class="box">请输入负责人电话</div></div>
+                <div class="field"><label><em>*</em>负责人邮箱</label><div class="box">请输入负责人邮箱</div></div>
+                <div class="actions"><button class="btn" type="button">确认</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2. 商户平台：填完以后修改</h2>
+      <p>填过之后要改，点右上角名字。在「个人中心」下面新增「商户中心」，进去改这三项，保存后生效。</p>
+      <p>点进去是商户中心。三项带出已经填写的内容，改完点保存。保存后写回中台，不再弹出登录时的填写窗。</p>
+      <div class="drop" aria-label="增加商户中心后的菜单">
+        <div>个人中心</div>
+        <div class="new">商户中心 <span class="tag">新增</span></div>
+        <div>操作指引 <span class="switch"><i></i></span></div>
+        <div class="out">退出登录</div>
+      </div>
+      <div class="stage" aria-label="商户中心页面设计">
+        <div class="topbar">
+          <div class="brand">蜂巢云平台<span>|</span>商户管理平台</div>
+          <div class="who"><span class="avatar"></span>常念</div>
+        </div>
+        <div class="shell">
+          <div class="side">
+            <div>首页</div>
+            <div>商品管理</div>
+            <div>活动管理</div>
+            <div>额度管理</div>
+            <div>订单管理</div>
+          </div>
+          <div class="page">
+            <h3>商户中心</h3>
+            <p class="hint">修改商户负责人信息。保存后同步到数字中台的商户详情。</p>
+            <div class="form">
+              <div class="field"><label><em>*</em>负责人</label><div class="box filled">王敏</div></div>
+              <div class="field"><label><em>*</em>负责人电话</label><div class="box filled">13800001111</div></div>
+              <div class="field"><label><em>*</em>负责人邮箱</label><div class="box filled">wangmin@example.com</div></div>
+              <div class="actions"><button class="btn" type="button">保存</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="foot">示意图。框里的姓名、电话、邮箱是示例，不是真实商户。</p>
+    </section>
+
+    <section class="card">
+      <h2>3. 写回数字中台</h2>
+      <p>商户平台保存后，写到数字中台「用户管理 → 商户中心 → 商户管理」里对应商户的详情。中台详情里负责人和联系方式已经有，联系方式就是负责人电话。这次在联系方式下面新增「负责人邮箱」。</p>
+      <table>
+        <thead><tr><th>商户平台</th><th>中台商户详情</th><th>导出</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>负责人</td>
+            <td><span class="mark keep">已有</span> 负责人</td>
+            <td>导出带上</td>
+          </tr>
+          <tr>
+            <td>负责人电话</td>
+            <td><span class="mark keep">已有</span> 联系方式</td>
+            <td>导出带上</td>
+          </tr>
+          <tr>
+            <td>负责人邮箱</td>
+            <td><span class="mark add">新增</span> 负责人邮箱</td>
+            <td><span class="mark add">新增</span> 导出字段</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>列表上的「导出」沿用现在的入口。导出文件加上负责人、联系方式、负责人邮箱。</p>
+      <div class="detail" aria-label="商户详情中负责人邮箱的位置">
+        <div class="dhead"><i>‹</i> 商户详情</div>
+        <div class="dbody">
+          <div class="drow"><span><em class="req">*</em>收款银行</span><div class="din">交通银行杭州城西支行 / 交通银行杭州华浙广场支行</div></div>
+          <div class="markbox">
+            <div class="drow"><span>负责人</span><div class="din ph">请输入负责人名称</div><span class="mark keep pill">已有</span></div>
+            <div class="drow"><span>联系方式</span><div class="din ph">请输入联系电话</div><span class="mark keep pill">已有</span></div>
+            <div class="drow"><span>负责人邮箱</span><div class="din ph">请输入负责人邮箱</div><span class="mark add pill">新增</span></div>
+          </div>
+          <div class="drow"><span><em class="req">*</em>商户分类</span><div class="din">4S</div></div>
+        </div>
+      </div>
+      <p class="foot">红框里前两项是详情里已有的负责人和联系方式。联系方式下面新增负责人邮箱。</p>
+    </section>
+  </div>
+</body>
+</html>
